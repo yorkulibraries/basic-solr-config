@@ -243,6 +243,25 @@
    <copyField source="dc.relation" dest="dc.relation_s"/>
    <field name="dc.relation_s" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
 
+  <field name="mods_language_languageTerm_code_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_originInfo_place_placeTerm_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_originInfo_publisher_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_originInfo_place_placeTerm_text_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_location_physicalLocation_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_name_namePart_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_name_role_roleTerm_text_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_typeOfResource_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_physicalDescription_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_relatedItem_titleInfo_title_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_topic_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_genre_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_geographic_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_temporal_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_hierarchicalGeographic_city_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_hierarchicalGeographic_province_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_hierarchicalGeographic_country_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+  <field name="mods_subject_hierarchicalGeographic_continent_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+
  </fields>
 
    
