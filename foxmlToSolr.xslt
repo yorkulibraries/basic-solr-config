@@ -110,7 +110,7 @@
   <!-- Index an object -->
   <xsl:template match="/foxml:digitalObject" mode="indexFedoraObject">
     <xsl:param name="PID"/>
-
+    <add>
     <doc>
       <!-- put the object pid into a field -->
       <field name="PID">
@@ -195,6 +195,7 @@
         </xsl:for-each>
       </field>
     </doc>
+  </add>
   </xsl:template>
 
   <!-- Delete the solr doc of an object -->
