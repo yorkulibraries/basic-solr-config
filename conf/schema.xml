@@ -45,7 +45,7 @@
     that avoids logging every request
 -->
 
-<schema name="example" version="1.5">
+<schema name="YUDL" version="1.5">
   <!-- attribute "name" is the name of this schema and is only used for display purposes.
        version="x.y" is Solr's version number for the schema syntax and 
        semantics.  It should not normally be changed by applications.
@@ -243,26 +243,29 @@
    <copyField source="dc.relation" dest="dc.relation_s"/>
    <field name="dc.relation_s" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
 
-  <field name="mods_language_languageTerm_code_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_originInfo_place_placeTerm_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_originInfo_publisher_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_originInfo_place_placeTerm_text_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_location_physicalLocation_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_name_namePart_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_name_role_roleTerm_text_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_typeOfResource_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_physicalDescription_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_relatedItem_titleInfo_title_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_topic_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_genre_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_geographic_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_temporal_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_hierarchicalGeographic_city_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_hierarchicalGeographic_province_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_hierarchicalGeographic_country_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
-  <field name="mods_subject_hierarchicalGeographic_continent_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_language_languageTerm_code_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_originInfo_place_placeTerm_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_originInfo_publisher_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_originInfo_place_placeTerm_text_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_location_physicalLocation_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_name_namePart_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_name_role_roleTerm_text_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_typeOfResource_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_physicalDescription_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_relatedItem_titleInfo_title_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_topic_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_genre_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_geographic_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_temporal_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_hierarchicalGeographic_city_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_hierarchicalGeographic_province_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_hierarchicalGeographic_country_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_subject_hierarchicalGeographic_continent_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
 
- </fields>
+   <copyField source="mods_language_languageTerm_code_ms" dest="iso639"/>
+   <field name="iso639" type="iso639Code" indexed="true" multiValued="true" />
+
+</fields>
 
    
    <!-- For GSearch 2.6 -->
@@ -1146,7 +1149,15 @@
       </analyzer>
     </fieldType>
 
- </types>
+    <!-- Kevin Clarke is awesome! -->
+    <fieldType name="iso639Code" class="solr.TextField" omitNorms="true">
+      <analyzer>
+        <tokenizer class="solr.PatternTokenizerFactory" pattern="[;,]\s*" />
+        <filter class="info.freelibrary.solr.ISO639ConversionFilterFactory" />
+      </analyzer>
+    </fieldType>
+    
+  </types>
   
   <!-- Similarity is the scoring routine for each document vs. a query.
        A custom Similarity or SimilarityFactory may be specified here, but 

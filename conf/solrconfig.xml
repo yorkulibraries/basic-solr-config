@@ -81,6 +81,9 @@
   <lib dir="/usr/local/fedora/solr/contrib/velocity/lib" regex=".*\.jar" />
   <lib dir="/usr/local/fedora/solr/dist/" regex="solr-velocity-\d.*\.jar" />
 
+  <lib dir="/usr/local/fedora/solr/contrib/iso639/lib" regex=".*\.jar" />
+  <lib dir="/usr/local/fedora/solr/dist/" regex="solr-iso639-filter\d.*\.jar" />
+
   <!-- If a 'dir' option (with or without a regex) is used and nothing
        is found that matches, it will be ignored
     -->
