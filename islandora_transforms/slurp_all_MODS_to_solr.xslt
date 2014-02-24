@@ -5,15 +5,15 @@
   xmlns:foxml="info:fedora/fedora-system:def/foxml#"
   xmlns:mods="http://www.loc.gov/mods/v3"
      exclude-result-prefixes="mods">
-     <!-- <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>-->
-     <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
+  <!-- <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/config/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>-->
+  <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
 
   <xsl:template match="foxml:datastream[@ID='MODS']/foxml:datastreamVersion[last()]" name="index_MODS">
     <xsl:param name="content"/>
     <xsl:param name="prefix"></xsl:param>
     <xsl:param name="suffix">ms</xsl:param>
 
-    <xsl:apply-templates mode="slurping_MODS" select="$content/mods:mods">
+    <xsl:apply-templates mode="slurping_MODS" select="$content//mods:mods[1]">
       <xsl:with-param name="prefix" select="$prefix"/>
       <xsl:with-param name="suffix" select="$suffix"/>
       <xsl:with-param name="pid" select="../../@PID"/>
@@ -37,9 +37,27 @@
     </xsl:variable>
 
     <xsl:if test="not(normalize-space($textValue)='')">
+    <!-- Use attributes in field name. -->
+      <xsl:variable name="this_prefix">
+        <xsl:value-of select="$prefix"/>
+        <xsl:for-each select="@*">
+          <xsl:value-of select="local-name()"/>
+          <xsl:text>_</xsl:text>
+          <xsl:value-of select="."/>
+          <xsl:text>_</xsl:text>
+        </xsl:for-each>
+      </xsl:variable>
+
       <field>
         <xsl:attribute name="name">
-          <xsl:value-of select="concat($prefix, local-name(), '_dt')"/>
+          <xsl:value-of select="concat($this_prefix, local-name(), '_dt')"/>
+        </xsl:attribute>
+        <xsl:value-of select="$textValue"/>
+      </field>
+
+      <field>
+        <xsl:attribute name="name">
+          <xsl:value-of select="concat($prefix, local-name(), '_mdt')"/>
         </xsl:attribute>
         <xsl:value-of select="$textValue"/>
       </field>
