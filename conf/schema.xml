@@ -174,6 +174,7 @@
    <dynamicField name="*_fs" type="float"  indexed="true"  stored="true"  multiValued="true"/>
    <dynamicField name="*_d"  type="double" indexed="true"  stored="true"/>
    <dynamicField name="*_ds" type="double" indexed="true"  stored="true"  multiValued="true"/>
+   <dynamicField name="*_hlt" type="text_general"    indexed="true"  stored="true" termVectors="true" termPositions="true" termOffsets="true"/>
 
    <!-- Type used to index the lat and lon components for the "location" FieldType -->
    <dynamicField name="*_coordinate"  type="tdouble" indexed="true"  stored="false" />
@@ -268,6 +269,8 @@
 
    <copyField source="mods_language_languageTerm_code_ms" dest="iso639"/>
    <field name="iso639" type="iso639Code" indexed="true" multiValued="true" />
+
+   <copyField source="*" dest="catch_all_fields_mt"/>
 
 </fields>
 
