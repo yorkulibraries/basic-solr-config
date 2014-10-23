@@ -264,14 +264,19 @@
    <field name="mods_subject_hierarchicalGeographic_country_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
    <field name="mods_subject_hierarchicalGeographic_continent_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
 
+   <copyField source="dsmd.OBJ.Content-Type" dest="dsmd.OBJ.Content-Type_ms" />
+   <field name="dsmd.OBJ.Content-Type_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+
    <copyField source="mods_subject_cartographics_coordinates_ms" dest="mods_subject_cartographics_coordinates_coordinate"/>
    <field name="mods_subject_cartographics_coordinates_coordinate" type="location" indexed="true" multiValued="true"/>
 
-   <copyField source="mods_originInfo_dateOther_dt" dest="mods_originInfo_dateOther_ms"/>
+   <copyField source="mods_originInfo_dateOther_dt" dest="mods_originInfo_dateOther_ms" />
    <field name="mods_originInfo_dateOther_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
 
    <copyField source="mods_language_languageTerm_code_ms" dest="iso639"/>
    <field name="iso639" type="iso639Code" indexed="true" multiValued="true" />
+
+   <field name="fgs_label_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
 
    <copyField source="*" dest="catch_all_fields_mt"/>
 
@@ -296,8 +301,8 @@
   when parsing a query string to determine if a clause of the query should be marked as
   required or optional, assuming the clause isn't already marked by some operator.
   The default is OR, which is generally assumed so it is not a good idea to change it
-  globally here.  The "q.op" request parameter takes precedence over this.
- <solrQueryParser defaultOperator="OR"/> -->
+  globally here.  The "q.op" request parameter takes precedence over this. -->
+ <solrQueryParser defaultOperator="AND"/>
 
   <!-- copyField commands copy one field to another at the time a document
         is added to the index.  It's used either to index the same field differently,
