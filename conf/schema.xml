@@ -263,6 +263,7 @@
    <field name="mods_subject_hierarchicalGeographic_province_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
    <field name="mods_subject_hierarchicalGeographic_country_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
    <field name="mods_subject_hierarchicalGeographic_continent_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <field name="mods_originInfo_dateIssued_dt" type="date" indexed="true"  stored="true" multiValued="true"/>
 
    <copyField source="dsmd.OBJ.Content-Type" dest="dsmd.OBJ.Content-Type_ms" />
    <field name="dsmd.OBJ.Content-Type_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
