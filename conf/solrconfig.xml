@@ -69,20 +69,20 @@
        The examples below can be used to load some solr-contribs along 
        with their external dependencies.
     -->
-  <lib dir="/usr/local/fedora/solr/contrib/extraction/lib" regex=".*\.jar" />
-  <lib dir="/usr/local/fedora/solr/dist/" regex="solr-cell-\d.*\.jar" />
+  <lib dir="/big_data/solr/contrib/extraction/lib" regex=".*\.jar" />
+  <lib dir="/big_data/solr/dist/" regex="solr-cell-\d.*\.jar" />
 
-  <lib dir="/usr/local/fedora/solr/contrib/clustering/lib/" regex=".*\.jar" />
-  <lib dir="/usr/local/fedora/solr/dist/" regex="solr-clustering-\d.*\.jar" />
+  <lib dir="/big_data/solr/contrib/clustering/lib/" regex=".*\.jar" />
+  <lib dir="/big_data/solr/dist/" regex="solr-clustering-\d.*\.jar" />
 
-  <lib dir="/usr/local/fedora/solr/contrib/langid/lib/" regex=".*\.jar" />
-  <lib dir="/usr/local/fedora/solr/dist/" regex="solr-langid-\d.*\.jar" />
+  <lib dir="/big_data/solr/contrib/langid/lib/" regex=".*\.jar" />
+  <lib dir="/big_data/solr/dist/" regex="solr-langid-\d.*\.jar" />
 
-  <lib dir="/usr/local/fedora/solr/contrib/velocity/lib" regex=".*\.jar" />
-  <lib dir="/usr/local/fedora/solr/dist/" regex="solr-velocity-\d.*\.jar" />
+  <lib dir="/big_data/solr/contrib/velocity/lib" regex=".*\.jar" />
+  <lib dir="/big_data/solr/dist/" regex="solr-velocity-\d.*\.jar" />
 
-  <lib dir="/usr/local/fedora/solr/contrib/iso639/lib" regex=".*\.jar" />
-  <lib dir="/usr/local/fedora/solr/dist/" regex="solr-iso639-filter\d.*\.jar" />
+  <lib dir="/big_data/solr/contrib/iso639/lib" regex=".*\.jar" />
+  <lib dir="/big_data/solr/dist/" regex="solr-iso639-filter\d.*\.jar" />
 
   <!-- If a 'dir' option (with or without a regex) is used and nothing
        is found that matches, it will be ignored

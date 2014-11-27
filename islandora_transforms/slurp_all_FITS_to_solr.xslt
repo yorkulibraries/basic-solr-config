@@ -5,7 +5,7 @@
   xmlns:foxml="info:fedora/fedora-system:def/foxml#"
   xmlns:fits="http://hul.harvard.edu/ois/xml/ns/fits/fits_output http://hul.harvard.edu/ois/xml/xsd/fits/fits_output.xsd"
      exclude-result-prefixes="fits">
-  <xsl:include href="/usr/local/fedora/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
+  <xsl:include href="/var/lib/tomcat/webapps/fedoragsearch/WEB-INF/classes/fgsconfigFinal/index/FgsIndex/islandora_transforms/library/xslt-date-template.xslt"/>
 
   <xsl:template match="foxml:datastream[@ID='TECHMD_FITS']/foxml:datastreamVersion[last()]" name="index_FITS">
     <xsl:param name="content"/>
