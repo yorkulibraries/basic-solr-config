@@ -274,7 +274,7 @@
    <copyField source="mods_originInfo_dateOther_dt" dest="mods_originInfo_dateOther_ms" />
    <field name="mods_originInfo_dateOther_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
 
-   <copyField source="mods_language_languageTerm_code_ms" dest="iso639"/>
+   <copyField source="mods_language_languageTerm_code_s" dest="iso639"/>
    <field name="iso639" type="iso639Code" indexed="true" multiValued="true" />
 
    <field name="fgs_label_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
