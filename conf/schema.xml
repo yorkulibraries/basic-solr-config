@@ -279,6 +279,13 @@
 
    <field name="fgs_label_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
 
+   <field name="dc.title_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <copyField source="dc.title" dest="dc.title_s" />
+
+   <field name="facet_type_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
+   <copyField source="mods_physicalDescription_form_s" dest="facet_type_ms" />
+   <copyField source="mods_physicalDescription_s" dest="facet_type_ms" />
+
    <copyField source="*" dest="catch_all_fields_mt"/>
 
 </fields>
