@@ -279,8 +279,14 @@
 
    <field name="fgs_label_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
 
-   <field name="dc.title_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
-   <copyField source="dc.title" dest="dc.title_s" />
+   <!--<field name="dc.title_s" type="string" indexed="true" stored="true" required="true" multiValued="false"/>
+   <copyField source="dc.title" dest="dc.title_s" />-->
+
+   <field name="dc.title_ms" type="string" indexed="true" stored="true" required="true" multiValued="true"/>
+   <copyField source="dc.title" dest="dc.title_ms" />
+
+   <copyField source="mods_subject_topic_ms" dest="mods_subject_topic_all" />
+   <copyField source="mods_subject_topic_s" dest="mods_subject_topic_all" />
 
    <field name="facet_format_ms" type="string" multiValued="true" maxChars="300" indexed="true" stored="true"/>
    <copyField source="mods_physicalDescription_s" dest="facet_format_ms" />
