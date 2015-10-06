@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Basic DFXML -->
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns='http://www.forensicswiki.org/wiki/Category:Digital_Forensics_XML' xmlns:dc='http://purl.org/dc/elements/1.1/' version="1.0">
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:dfxml="http://www.forensicswiki.org/wiki/Category:Digital_Forensics_XML"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:foxml="info:fedora/fedora-system:def/foxml#">
+
   <xsl:template match="foxml:datastream[@ID='TECHMD_DFXML']/foxml:datastreamVersion[last()]" name="index_dfxml">
     <xsl:param name="content"/>
     <xsl:param name="prefix"/>
