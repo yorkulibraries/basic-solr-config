@@ -15,7 +15,6 @@
       </xsl:attribute>
       <xsl:copy-of select="$content"/>
     </field>
-    
   </xsl:template>
   -->
 </xsl:stylesheet>
