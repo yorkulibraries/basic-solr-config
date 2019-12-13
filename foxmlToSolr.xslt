@@ -23,8 +23,11 @@
   xmlns:dfxml="http://www.forensicswiki.org/wiki/Category:Digital_Forensics_XML"
   xmlns:islandora-exts="xalan://ca.upei.roblib.DataStreamForXSLT"
             exclude-result-prefixes="exts"
-            xmlns:encoder="xalan://java.net.URLEncoder"
-            xmlns:java="http://xml.apache.org/xalan/java">
+  xmlns:encoder="xalan://java.net.URLEncoder"
+  xmlns:java="http://xml.apache.org/xalan/java"
+  xmlns:dgi-e="xalan://ca.discoverygarden.gsearch_extensions"
+  xmlns:sparql="http://www.w3.org/2001/sw/DataAccess/rf1/result"
+  xmlns:xalan="http://xml.apache.org/xalan">
 
   <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
@@ -36,13 +39,6 @@
   <xsl:param name="TRUSTSTOREPATH" select="repositoryName"/>
   <xsl:param name="TRUSTSTOREPASS" select="repositoryName"/>
 
-  <!-- These values are accessible in included xslts -->
-  <xsl:variable name="PROT">http</xsl:variable>
-  <xsl:variable name="HOST">localhost</xsl:variable>
-  <xsl:variable name="PORT">8080</xsl:variable>
-  <xsl:variable name="PID" select="/foxml:digitalObject/@PID"/>
-  <xsl:variable name="FEDORA" xmlns:java_string="xalan://java.lang.String" select="substring($FEDORASOAP, 1, java_string:lastIndexOf(java_string:new(string($FEDORASOAP)), '/'))"/>
-
   <!--
        Parameter(s) from custom_parameters.properties.
   -->
@@ -51,6 +47,15 @@
   <xsl:param name="maintain_dataset_latest_version_flag" select="false()"/>
   <xsl:param name="index_compound_sequence" select="true()"/>
   <xsl:param name="index_checksums" select="false()"/>
+
+  <!-- These values are accessible in included xslts -->
+  <xsl:variable name="PROT">http</xsl:variable>
+  <xsl:variable name="HOST">localhost</xsl:variable>
+  <xsl:variable name="PORT">8080</xsl:variable>
+  <xsl:variable name="PID" select="/foxml:digitalObject/@PID"/>
+  <!--  Used for indexing other objects.
+  <xsl:variable name="FEDORA" xmlns:java_string="xalan://java.lang.String" select="substring($FEDORASOAP, 1, java_string:lastIndexOf(java_string:new(string($FEDORASOAP)), '/'))"/>
+  -->
 
   <!--
   This xslt stylesheet generates the IndexDocument consisting of IndexFields
@@ -88,10 +93,13 @@
       <xsl:if test="not(foxml:digitalObject/foxml:datastream[@ID='METHODMAP' or @ID='DS-COMPOSITE-MODEL'])">
         <xsl:choose>
           <xsl:when test="foxml:digitalObject/foxml:objectProperties/foxml:property[@NAME='info:fedora/fedora-system:def/model#state' and @VALUE='Active']">
-            <add>
+            <xsl:variable name="doc">
               <xsl:apply-templates select="/foxml:digitalObject" mode="indexFedoraObject">
                 <xsl:with-param name="PID" select="$PID"/>
               </xsl:apply-templates>
+            </xsl:variable>
+            <add>
+              <xsl:copy-of select="$doc"/>
             </add>
           </xsl:when>
           <xsl:otherwise>
@@ -105,12 +113,19 @@
   <!-- Index an object -->
   <xsl:template match="/foxml:digitalObject" mode="indexFedoraObject">
     <xsl:param name="PID"/>
-    <add>
+    <xsl:param name="version" select="false()"/>
+
     <doc>
       <!-- put the object pid into a field -->
       <field name="PID">
         <xsl:value-of select="$PID"/>
       </field>
+ 
+      <xsl:if test="$version">
+        <field name="_version_">
+          <xsl:value-of select="$version"/>
+        </field>
+      </xsl:if>
 
       <!-- These templates are in the islandora_transforms -->
       <xsl:apply-templates select="foxml:objectProperties/foxml:property"/>
@@ -147,14 +162,14 @@
                handle the mimetypes supported by the "getDatastreamText" call:
                https://github.com/fcrepo/gsearch/blob/master/FedoraGenericSearch/src/java/dk/defxws/fedoragsearch/server/TransformerToText.java#L185-L200
           -->
-            <xsl:when test="@CONTROL_GROUP='M' and foxml:datastreamVersion[last() and not(starts-with(@MIMETYPE, 'image') or starts-with(@MIMETYPE, 'audio') or starts-with(@MIMETYPE, 'video') or starts-with(@MIMETYPE, 'warc') or starts-with(@MIME-TYPE, 'MBWF') or @MIMETYPE = 'application/octet-stream' or @MIMETYPE = 'application/mxf' or @MIMETYPE = 'application/zip' or @MIMETYPE = 'application/x-zip')] and foxml:datastream[@ID='WARC_FILTERED'or @ID='warc_filtered' or @ID='WARC_CSV' or @ID='warc_csv']">
+            <xsl:when test="@CONTROL_GROUP='M' and foxml:datastreamVersion[last() and not(starts-with(@MIMETYPE, 'image') or starts-with(@MIMETYPE, 'audio') or starts-with(@MIMETYPE, 'video') or starts-with(@MIMETYPE, 'warc') or starts-with(@MIME-TYPE, 'MBWF') or @MIMETYPE = 'application/octet-stream' or @MIMETYPE = 'application/mxf' or @MIMETYPE = 'application/zip' or @MIMETYPE = 'application/x-zip')] or not(foxml:datastream[@ID='WARC_FILTERED' or @ID='warc_filtered' or @ID='WARC_CSV' or @ID='warc_csv'])">
             <!-- TODO: should do something about mime type filtering
               text/plain should use the getDatastreamText extension because document will only work for xml docs
               xml files should use the document function
               other mimetypes should not be being sent
               will this let us not use the content variable? -->
             <xsl:apply-templates select="foxml:datastreamVersion[last()]">
-              <xsl:with-param name="content" select="java:ca.discoverygarden.gsearch_extensions.XMLStringUtils.escapeForXML(normalize-space(exts:getDatastreamText($PID, $REPOSITORYNAME, @ID, $FEDORASOAP, $FEDORAUSER, $FEDORAPASS, $TRUSTSTOREPATH, $TRUSTSTOREPASS)))"/>
+              <xsl:with-param name="content" select="dgi-e:XMLStringUtils.escapeForXML(normalize-space(exts:getDatastreamText($PID, $REPOSITORYNAME, @ID, $FEDORASOAP, $FEDORAUSER, $FEDORAPASS, $TRUSTSTOREPATH, $TRUSTSTOREPASS)))"/>
             </xsl:apply-templates>
           </xsl:when>
         </xsl:choose>
@@ -190,7 +205,6 @@
         </xsl:for-each>
       </field> -->
     </doc>
-  </add>
   </xsl:template>
 
   <!-- Delete the solr doc of an object -->

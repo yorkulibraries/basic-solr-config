@@ -7,7 +7,7 @@
   xmlns:islandora-exts="xalan://ca.upei.roblib.DataStreamForXSLT"
             exclude-result-prefixes="exts">
   <!-- Maintaining DSID mappings for backwards compatibility with wild implementations. -->
-  <xsl:template match="foxml:datastream[@ID='OCR']/foxml:datastreamVersion[last()] " name="index_text">
+  <xsl:template match="foxml:datastream[@ID='OCR' or @ID='ocr' or @ID='TEXT' or @ID='text' or @ID='full_text' or @ID='FULL_TEXT' or @ID='fullText' or @ID='TRANSCRIPT' or @ID='transcript']/foxml:datastreamVersion[last() and @MIMETYPE='text/plain']" name="index_text">
 
     <xsl:param name="content"/>
 
